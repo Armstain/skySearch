@@ -4,13 +4,13 @@ const BASE_URL = import.meta.env.VITE_APP_API_BASE_URL;
 const API_KEY = import.meta.env.VITE_APP_API_KEY;
 const SECRET_CODE = import.meta.env.VITE_APP_SECRET_CODE;
 
-
 const apiClient = axios.create({
-    baseURL: BASE_URL,
+    baseURL: BASE_URL ? '/api' : 'https://api.innotraveltech.com',
     headers: {
+        'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'API-KEY': API_KEY,
-        'SECRET-CODE': SECRET_CODE
+        'apikey': API_KEY,
+        'secretecode': SECRET_CODE
     }
 });
 // search flight params
@@ -48,7 +48,7 @@ export const searchFlight = async (params: SearchFlightParams): Promise<any> => 
     }
 }
 // get auto suggestion for airport
-export const getAutoSuggestionForAirport = async (): Promise<any> => {
+export const getAutoSuggestionForAirport = async () => {
     try {
         const response = await apiClient.get("/tools/airport-autosuggetion-data");
         return response.data;
